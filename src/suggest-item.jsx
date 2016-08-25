@@ -38,12 +38,25 @@ export default class SuggestItem extends React.Component {
       {'geosuggest-item--active': this.props.isActive}
     );
 
+    let label = this.props.suggest.label;
+    // ONLY do the first matched substring so as to not confuse the user
+    if (this.props.suggest.matchedSubstrings && this.props.suggest.matchedSubstrings.length) {
+      let matched = this.props.suggest.matchedSubstrings[0];
+      label = <span>
+        {label.substring(0, matched.offset) }
+        <span className="geosuggest-item--matched-substring">
+          {label.substring(matched.offset, matched.offset + matched.length) }
+        </span>
+        {label.substring(matched.offset + matched.length) }
+      </span>;
+    }
+
     return <li className={classes}
       style={this.props.style}
       onMouseDown={this.props.onMouseDown}
       onMouseOut={this.props.onMouseOut}
       onClick={this.onClick}>
-        {this.props.suggest.label}
+        {label}
     </li>;
   }
 }

@@ -233,7 +233,8 @@ class Geosuggest extends React.Component {
         suggests.push({
           label: this.props.getSuggestLabel(suggest),
           placeId: suggest.place_id,
-          isFixture: false
+          isFixture: false,
+          matchedSubstrings: suggest.matched_substrings
         });
       }
     });
